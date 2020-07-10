@@ -1,3 +1,5 @@
+
+
 # Chap 03. SQL 기초
 
 <br/><br/>
@@ -584,8 +586,7 @@ WHERE	custid IN ( SELECT	custid
 
 #### 상관 부속질의
 
-* 상관 부속질의(correlated subquery)는 상위 부속질의의 투플을 이용하여 하위 부속질의를 계산함. 즉 상위 
-* 부속질의와 하위 부속질의가 독립적이지 않고 서로 관련을 맺고 있음.
+* 상관 부속질의(correlated subquery)는 상위 부속질의의 투플을 이용하여 하위 부속질의를 계산함. 즉 상위 부속질의와 하위 부속질의가 독립적이지 않고 서로 관련을 맺고 있음.
 
 <br/>
 
@@ -620,6 +621,11 @@ SELECT 	name
 FROM 	Customer
 WHERE 	custid IN (	SELECT custid
 					FROM  Orders);
+---------------------------------------------------------------
+SELECT 	name
+FROM 	Customer
+WHERE 	custid NOT IN (	SELECT custid
+						FROM  Orders);
 ```
 
 <br/>
@@ -636,6 +642,12 @@ FROM 	Customer cs
 WHERE 	EXISTS (SELECT *
 				FROM  Orders od
 				WHERE cs.custid = od.custid);
+--------------------------------------------------------------				
+SELECT 	name, address
+FROM	customer 
+WHERE   custid IN ( SELECT custid
+                    FROM  orders
+                    WHERE orders.custid = customer.custid);
 ```
 
 <br/>
@@ -695,7 +707,7 @@ CREATE TABLE NewBook (
  price		NUMBER,   
  PRIMARY KEY (bookid));		// ★ 둘 중 하나 선택!
  
- --------------------------------------------------------------------------------
+ -------------------------------------------------------------------------------
  ※ bookid 속성이 없어서 두 개의 속성 bookname, publisher가 기본키가 된다면
    괄호를 사용하여 복합키를 지정한다.
 
@@ -705,7 +717,7 @@ CREATE TABLE NewBook (
  price		NUMBER,
  PRIMARY KEY (bookname, publisher));	// ★
 
- --------------------------------------------------------------------------------
+ -------------------------------------------------------------------------------
  * bookname은 NULL 값을 가질 수 없고, publisher는 같은 값이 있으면 안 된다.
    price에 값이 입력되지 않을 경우 기본 값 10000을 저장한다.
    또 가격은 최소 1,000원 이상으로 한다.
@@ -791,7 +803,7 @@ ALTER TABLE 테이블이름
 	[[ADD┃DROP] 제약이름]
 ```
 
-
+<br/>
 
 #### 질의 3-37) NewBook 테이블에 VARCHAR2(13)의 자료형을 가진 isbn 속성을 추가하시오.
 
@@ -860,6 +872,7 @@ DROP  TABLE  NewBook;
 #### 질의 3-43) NewCustomer 테이블을 삭제하시오. 만약 삭제가 거절된다면 원인을 파악하고 관련된 테이블을 같이 삭제하시오(NewOrders 테이블이 NewCustomer를 참조하고 있음).
 
 ```sql
+DROP TABLE  NewOrders;
 DROP TABLE  NewCustomer;
 ```
 
@@ -880,7 +893,7 @@ DROP TABLE  NewCustomer;
 #### INSERT 문의 기본 문법
 
 ```sql
-INSERT  INTO 테이블이름[(속성리스트)]  // ★ INSERT INTO VALUES
+INSERT  INTO 테이블이름[(속성리스트)]  // ★ INSERT INTO _ VALUES _
 		VALUES (값리스트);
 ```
 
@@ -935,7 +948,7 @@ INSERT	INTO Book(bookid, bookname, price, publisher)
 #### UPDATE 문의 기본 문법
 
 ```sql
-UPDATE	테이블이름			// ★ UPDATE SET
+UPDATE	테이블이름			// ★ UPDATE _ SET
 SET		속성이름1=값1[, 속성이름2=값2, ...]
 [WHERE <검색조건>];
 ```
@@ -973,7 +986,7 @@ WHERE 	name LIKE '박세리';
 #### DELETE 문의 기본 문법
 
 ```sql
-DELETE FROM    테이블이름		// ★ DELETE FROM 
+DELETE FROM    테이블이름		// ★ DELETE FROM _
 [WHERE  검색조건];
 ```
 

@@ -29,15 +29,26 @@
 
 <br/>
 
-
-
-
-
 * SYSDATE 는 많이 쓴다~ 
 
 <br/>
 
 ### NULL 값 처리
+
+#### NULL 값이란?
+
+* 아직 지정되지 않은 값
+* NULL 값은 ‘0’, ‘’ (빈 문자), ‘ ’ (공백) 등과 다른 특별한 값
+* NULL 값은 비교 연산자로 비교가 불가능함.
+* NULL 값의 연산을 수행하면 결과 역시 NULL 값으로 반환됨.
+
+<br/>
+
+#### 집계 함수를 사용할 때 주의할 점
+
+* ‘NULL+숫자’ 연산의 결과는 NULL
+* 집계 함수 계산 시 NULL이 포함된 행은 집계에서 빠짐
+* 해당되는 행이 하나도 없을 경우 SUM, AVG 함수의 결과는 NULL이 되며,	COUNT 함수의 결과는 0.
 
 <br/>
 
@@ -66,7 +77,7 @@
 ```sql
 SELECT	  ( SELECT name
           	FROM Customer cs
-			WHERE cs.custid=od.custid ) "name", SUM(saleprice) "total"
+			WHERE cs.custid = od.custid ) "name", SUM(saleprice) "total"
 FROM		Orders od
 GROUP BY	od.custid;
 ```
@@ -113,7 +124,7 @@ GROUP BY cs.name;
 
 SELECT 	 cs.name, SUM(od.saleprice) "total"
 FROM 	 Customer cs, Orders od
-WHERE 	 cs.rownum <= 2 and cs.custid=od.custid
+WHERE 	 rownum <= 2 and cs.custid=od.custid
 GROUP BY cs.name;
 ```
 
@@ -256,21 +267,21 @@ WHERE 	EXISTS (SELECT *
 <br/>
 
 * 뷰(view)는 하나 이상의 테이블을 합하여 만든 가상의 테이블
-* 장점
-  * 편리성 및 재사용성  : 자주 사용되는 복잡한 질의를 뷰로 미리 정의해 놓을 수 있음
+* 장점 // ★
+  * **편리성 및 재사용성**  : 자주 사용되는 복잡한 질의를 뷰로 미리 정의해 놓을 수 있음
     * 복잡한 질의를 간단히 작성
-  * 보안성 : 각 사용자별로 필요한 데이터만 선별하여 보여줄 수 있음. 중요한 질의의 경우 질의 내용을 암호화 할 수 있음
+  * **보안성** : 각 사용자별로 필요한 데이터만 선별하여 보여줄 수 있음. 중요한 질의의 경우 질의 내용을 암호화 할 수 있음
     * 개인정보(주민번호)나 급여, 건강 같은 민감한 정보를 제외한 테이블을 만들어 사용 
   * **독립성 제공** : 미리 정의된 뷰를 일반 테이블처럼 사용할 수 있기 때문에 편리함. 또 사용자가 필요한 정보만 요구에 맞게 가공하여 뷰로 만들어 쓸 수 있음.
     * 원본 테이블이 구조가 변하여도 응용에 영향을 주지않도록하는 논리적 독립성 제공  
 
 <br/>
 
-* (뷰의 특징)
+* (뷰의 특징) // ★
 
-1. 원본 데이터 값에 따라 같이 변함
-2. 독립적인 인덱스 생성이 어려움
-3. 삽입, 삭제, 갱신 연산에 많은 제약이 따름
+1. **원본 데이터 값에 따라 같이 변함**
+2. **독립적인 인덱스 생성이 어려움**
+3. **삽입, 삭제, 갱신 연산에 많은 제약이 따름**
 
 <br/>
 
@@ -279,7 +290,7 @@ WHERE 	EXISTS (SELECT *
 * 기본 문법
 
 ```sql
-CREATE VIEW 뷰이름 [(열이름 [ ,...n ])]
+CREATE VIEW 뷰이름 [(열이름 [ ,...n ])] // ★
 AS SELECT 문
 ```
 
@@ -299,7 +310,7 @@ WHERE 	bookname LIKE '%축구%';
 
 ```sql
 CREATE VIEW vw_Book
-AS SELECT 	    *
+AS SELECT 	*
 FROM 	    Book
 WHERE 	    bookname LIKE '%축구%';
 ```
@@ -311,8 +322,8 @@ WHERE 	    bookname LIKE '%축구%';
 ```sql
 CREATE VIEW vw_Customer
 AS SELECT     *
-     FROM 	  Customer
-     WHERE    address LIKE '%대한민국%';
+   FROM 	  Customer
+   WHERE	  address LIKE '%대한민국%';
 ```
 
 <br/>
@@ -345,7 +356,7 @@ CREATE OF REPLACE VIEW 뷰이름 [(열이름 [ ,...n ])]
 AS SELECT 문
 ```
 
-* 뷰를 이용해서 절대로 실제 튜플을 수정하거나 하지 않는다.
+* **뷰를 이용해서 절대로 실제 튜플을 수정하거나 하지 않는다**.
 * 그게 가능하면 엄청 복잡해진다...
 
 <br/>
@@ -370,9 +381,9 @@ FROM 	Customer
 WHERE 	address LIKE '%영국%';
 ```
 
-* 뷰는 query 형태로 저장이 된다.
+* **뷰는 query 형태로 저장이 된다. // ★**
 * 위 <결과 확인> 코드의 vw_Customer는 실제로 <실제 수행> 코드로 치환되어 수행된다고 이해하자.
-* 즉, external schema와 conceptional schema 사이의 맵핑인 셈이다.
+* 즉, **external schema와 conceptional schema 사이의 맵핑인 셈**이다.
 * vw_Customer라는 것은, AS 이하 세 줄 코드이다 라는 맵핑
 
 <br/>
@@ -388,133 +399,3 @@ WHERE 	address LIKE '%영국%';
 <br/>
 
 ## 04 인덱스
-
-
-
-#### 질의 4-24) 
-
-```sql
-
-```
-
-<br/>
-
-#### 질의 4-25) 
-
-```sql
-
-```
-
-<br/>
-
-#### 질의 4-26) 
-
-```sql
-
-```
-
-<br/>
-
-#### 질의 4-27) 
-
-```sql
-
-```
-
-<br/>
-
-#### 질의 4-28) 
-
-```sql
-
-```
-
-<br/>
-
-#### 질의 4-29) 
-
-```sql
-
-```
-
-<br/>
-
-#### 질의 4-3) 
-
-```sql
-
-```
-
-<br/>
-
-#### 질의 4-3) 
-
-```sql
-
-```
-
-<br/>
-
-#### 질의 4-3) 
-
-```sql
-
-```
-
-<br/>
-
-#### 질의 4-3) 
-
-```sql
-
-```
-
-<br/>
-
-#### 질의 4-3) 
-
-```sql
-
-```
-
-<br/>
-
-#### 질의 4-3) 
-
-```sql
-
-```
-
-<br/>
-
-#### 질의 4-3) 
-
-```sql
-
-```
-
-<br/>
-
-#### 질의 4-3) 
-
-```sql
-
-```
-
-<br/>
-
-#### 질의 4-3) 
-
-```sql
-
-```
-
-<br/>
-
-#### 질의 4-3) 
-
-```sql
-
-```
-
-<br/>

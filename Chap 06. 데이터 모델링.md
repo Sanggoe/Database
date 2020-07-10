@@ -152,7 +152,7 @@
 
 #### 개체 타입의 ER 다이어그램 표현
 
-* ER 다이어그램상에서 개체 타입은 직사각형으로 나타냄.
+* ER 다이어그램상에서 개체 타입은 **직사각형**으로 나타냄.
 
 ![image-20200602160458529](C:\Users\smpsm\AppData\Roaming\Typora\typora-user-images\image-20200602160458529.png)
 
@@ -286,8 +286,6 @@
 * 상위 개체 타입의 특성에 따라 하위 개체 타입이 결정되는 형태
 
 ![image-20200602201352746](C:\Users\smpsm\AppData\Roaming\Typora\typora-user-images\image-20200602201352746.png)
-
-
 
 <br/>
 
