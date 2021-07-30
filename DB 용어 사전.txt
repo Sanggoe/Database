@@ -1,0 +1,66 @@
+* 용어 사전
+
+★ 데이터베이스 (DataBase)
+
+* 정의 (define)
+1. 통합된 데이터 (integrated data)
+2. 저장된 데이터 (stored data)
+ - 폰 노이만 병목 (Von-Neumann Bottleneck) 현상
+3. 운영 데이터 (operational data == organization data)
+4. 공용 데이터 (shared data)
+- 최적화 (optimizing)
+
+* 속성 (attribute)
+1. 실시간 접근성 (real time accessibility)
+2. 계속적인 변화 (continuous change) == 동적 dynamic
+3. 동시 공유 (concurrent sharing)
+ - 동시 제어 (concurrency control)
+4. 내용에 따른 참조 (reference by content) == 값에 의한 참조 (call by value)
+
+* 파일 시스템 (File System)
+- 데이터 중복 (data redundancy)
+- 데이터의 불일치(data inconsistency)
+
+★ 데이터베이스 시스템 (DataBase System)
+- 서버 (server)
+- 클라이언트 (client)
+- 데이터의 일관성 (data consistency)
+- 유지 (maintenance)
+- 복구 (recovery)
+- 동시 접근 제어(concurrency control)
+- 표준화(formating)
+- 무결성(integrity)
+
+★ 데이터베이스 관리 시스템 (DataBase Management System)
+- 데이터 구조 (data struct) == (data type)
+- 내장 (Embedded)
+- SEQUEL (Structured English Query Language)
+- SQL (Structured Query Language)
+- ESQL (Embedded Structured Query Language)
+
+- 독립성 (independency)
+- 종속성 (dependency)
+- 백업 (backup)
+- 회복 (recovery)
+- 동시성 제어 (concurrency control)
+
+★ 데이터베이스 언어
+- 데이터 정의어 (DDL, Data Definition Language)
+- 데이터 조작어 (DML, Data Manipulation Language)
+- 데이터 추출(data retrieval)
+- 데이터 제어어 (DCL, Data Control Language)
+
+★ 데이터베이스 관리자(DBA, Database Administrator)
+
+
+
+
+- RESTRICTED 
+- CASCADE
+- DEFAULT
+- NULL
+
+
+- σ π ≠ ⋈
+
+SELECT * FROM orders WHERE orderdate <= 14/07/14
